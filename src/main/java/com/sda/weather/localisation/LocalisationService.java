@@ -7,13 +7,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class LocalisationService {
+public class LocalisationService {  // todo split this service
 
     final LocalisationRepository localisationRepository;
 
-    Localisation createLocalisation(String cityName, String cityCountry) throws BadLocalisationCreation {
-        if(cityName.isEmpty()){
-            throw new BadLocalisationCreation("city name is empty");
+    Localisation createLocalisation(String cityName, String cityCountry) {  // todo more data
+        if (cityName.isEmpty()) {
+            throw new BadLocalisationCreation("City name is empty");    // todo handle this exception
         }
 
         Localisation localisation = new Localisation();
@@ -23,10 +23,8 @@ public class LocalisationService {
         return localisationRepository.save(localisation);
     }
 
-    Localisation findLocalisationByID(Long id){
+    Localisation findLocalisationByID(Long id) {
         return localisationRepository.findById(Long.valueOf(id))
-                .orElseThrow(() -> new NotFoundException("ID: " +id));
-
+                .orElseThrow(() -> new NotFoundException("id of an entry: " + id));
     }
-
 }

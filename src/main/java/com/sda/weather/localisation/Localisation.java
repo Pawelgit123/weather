@@ -20,5 +20,4 @@ public class Localisation {
     String country;
     int latitude;
     int longitude;
-
 }

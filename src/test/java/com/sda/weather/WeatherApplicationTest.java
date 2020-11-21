@@ -12,5 +12,4 @@ class WeatherApplicationTest {
     void test(){
 
     }
-
 }

@@ -14,22 +14,13 @@ public class LocalisationController {
 
     final LocalisationService localisationService;
 
-    @GetMapping("/localisation+{id}")
-    LocalisationDTO getLocalisationByID(@PathVariable Long id){
-        Localisation localisationByID = localisationService.findLocalisationByID(id);
-        Localisation localisation = localisationByID;
-
-        return localisation;
-
-
-
+    @GetMapping("/localisation/{id}")
+    LocalisationDTO getLocalisationByID(@PathVariable Long id) {
+        Localisation localisation = localisationService.findLocalisationByID(id);
+        // todo use a mapper to convert data
+        return null;
     }
 
-    @PostMapping("/localisation")
-    LocalisationDTO createLocalisation(){
-
-
-    }
-
-
+    // todo create endpoint for creation
+    // todo LocalisationDTO -> LocalisationDefinition -> pass to a service -> Localisation -> LocalisationDTO
 }
