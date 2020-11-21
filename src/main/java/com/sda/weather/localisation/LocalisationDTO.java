@@ -11,6 +11,7 @@ public class LocalisationDTO {
 
     String cityName;
     String country;
-    String latitude;
-    String longitude;
+    String region;
+    int latitude;
+    int longitude;
 }

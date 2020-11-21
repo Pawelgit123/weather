@@ -18,6 +18,7 @@ public class Localisation {
     Long id;
     String cityName;
     String country;
+    String region;
     int latitude;
     int longitude;
 }
