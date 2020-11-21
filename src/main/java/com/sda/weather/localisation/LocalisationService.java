@@ -1,6 +1,7 @@
 package com.sda.weather.localisation;
 
 import com.sda.weather.exceptions.BadLocalisationCreation;
+import com.sda.weather.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,12 @@ public class LocalisationService {
         localisation.setCountry(cityCountry);
 
         return localisationRepository.save(localisation);
+    }
+
+    Localisation findLocalisationByID(Long id){
+        return localisationRepository.findById(Long.valueOf(id))
+                .orElseThrow(() -> new NotFoundException("ID: " +id));
+
     }
 
 }

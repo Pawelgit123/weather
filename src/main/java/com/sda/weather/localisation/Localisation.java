@@ -15,10 +15,10 @@ public class Localisation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    String id;
+    Long id;
     String cityName;
     String country;
-    String latitude;
-    String longitude;
+    int latitude;
+    int longitude;
 
 }
