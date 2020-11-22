@@ -1,11 +1,14 @@
 package com.sda.weather.localisation;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatObject;
 
 
 class LocalisationTest {
+
 
     @Test
     void latitude_bottomBarrel() {
@@ -41,9 +44,9 @@ class LocalisationTest {
         Localisation localisation2 = new Localisation(2L, "Gdańsk", "Polska", "Pomorskie", 15, 0);
         Localisation localisation3 = new Localisation(3L, "Gdańsk", "Polska", "Pomorskie", 15, 15);
 
-        assertThat(localisation1.getLatitude()).isGreaterThanOrEqualTo(localisationParamLimit.getLongitudeMIN());
-        assertThat(localisation2.getLatitude()).isGreaterThanOrEqualTo(localisationParamLimit.getLongitudeMIN());
-        assertThat(localisation3.getLatitude()).isGreaterThanOrEqualTo(localisationParamLimit.getLongitudeMIN());
+        assertThat(localisation1.getLongitude()).isGreaterThanOrEqualTo(localisationParamLimit.getLongitudeMIN());
+        assertThat(localisation2.getLongitude()).isGreaterThanOrEqualTo(localisationParamLimit.getLongitudeMIN());
+        assertThat(localisation3.getLongitude()).isGreaterThanOrEqualTo(localisationParamLimit.getLongitudeMIN());
     }
 
     @Test
@@ -54,9 +57,8 @@ class LocalisationTest {
         Localisation localisation2 = new Localisation(2L, "Gdańsk", "Polska", "Pomorskie", 15, 0);
         Localisation localisation3 = new Localisation(3L, "Gdańsk", "Polska", "Pomorskie", 15, 180);
 
-        assertThat(localisation1.getLatitude()).isLessThanOrEqualTo(localisationParamLimit.getLongitudeMAX());
-        assertThat(localisation2.getLatitude()).isLessThanOrEqualTo(localisationParamLimit.getLongitudeMAX());
-        assertThat(localisation3.getLatitude()).isLessThanOrEqualTo(localisationParamLimit.getLongitudeMAX());
+        assertThat(localisation1.getLongitude()).isLessThanOrEqualTo(localisationParamLimit.getLongitudeMAX());
+        assertThat(localisation2.getLongitude()).isLessThanOrEqualTo(localisationParamLimit.getLongitudeMAX());
+        assertThat(localisation3.getLongitude()).isLessThanOrEqualTo(localisationParamLimit.getLongitudeMAX());
     }
-
 }

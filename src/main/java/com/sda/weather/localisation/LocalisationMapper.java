@@ -14,6 +14,5 @@ public class LocalisationMapper {
         localisationDTO.setLongitude(localisation.getLongitude());
 
         return localisationDTO;
-
     }
 }

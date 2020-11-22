@@ -6,7 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @Slf4j
@@ -27,12 +30,13 @@ public class LocalisationController {
     }
 
     @GetMapping("/localisation/")
-    List<Localisation> getLocalisations() {
+    List<LocalisationDTO> getLocalisations() {
 
         List<Localisation> localisations = localisationServiceGetAll.getAllLocalisations();
-        // czy ma zwracać liste DTO i potrzebny jest nowy mapper?
+        List<LocalisationDTO> dtos = new ArrayList<>();
+        localisations.forEach(p -> dtos.add(localisationMapper.mapToLocalisation(p)));
 
-        return localisations;
+        return dtos;
     }
 
     @PostMapping("localisation")

@@ -39,7 +39,8 @@ class LocalisationServiceFindTest {
         MvcResult result = mockMvc.perform(builder).andReturn();
 
         MockHttpServletResponse response = result.getResponse();
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.UNAUTHORIZED.value()); // nie wiem czemu unathorized leci
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
+        // nie wiem czemu unathorized leci
     }
 
 

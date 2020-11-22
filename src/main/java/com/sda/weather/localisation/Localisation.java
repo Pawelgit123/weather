@@ -1,5 +1,6 @@
 package com.sda.weather.localisation;
 
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,9 @@ public class Localisation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+    @NotNull
     String cityName;
+    @NotNull
     String country;
     String region;
     int latitude;
