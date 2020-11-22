@@ -1,11 +1,12 @@
 package com.sda.weather.localisation;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @Getter
-@AllArgsConstructor
+@NoArgsConstructor
+@Component
 public class LocalisationParamLimit {
 
     private final int latitudeMAX = 90;

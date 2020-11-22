@@ -1,8 +1,8 @@
 package com.sda.weather.exceptions;
 
-public class NotFoundException extends RuntimeException{
+public class NotFoundException extends RuntimeException {
 
-    public NotFoundException(String message){
+    public NotFoundException(String message) {
         super("NOT FOUND " + message);
     }
 }

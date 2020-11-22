@@ -1,58 +1,62 @@
 package com.sda.weather.localisation;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 class LocalisationTest {
 
-    private Localisation localisation;
-    private LocalisationParamLimit localisationParamLimit;
-
-
-    @BeforeEach
-    public void init() {
-
-
-        List<Localisation> localisations = List.of(new Localisation());
-
-        // aaaaaaaaaaaaa nie wiem jak łatwo zrobić obiekty z różnymi parametrami, chce tylko 2 przetestować
-
-    }
-
     @Test
     void latitude_bottomBarrel() {
-        int bottomLine = localisationParamLimit.getLatitudeMIN();
-        assertThat(localisation.getLatitude()).isGreaterThanOrEqualTo(bottomLine);
+        LocalisationParamLimit localisationParamLimit = new LocalisationParamLimit();
+
+        Localisation localisation1 = new Localisation(1L, "Gdańsk", "Polska", "Pomorskie", -90, 15);
+        Localisation localisation2 = new Localisation(2L, "Gdańsk", "Polska", "Pomorskie", 0, 15);
+        Localisation localisation3 = new Localisation(3L, "Gdańsk", "Polska", "Pomorskie", 15, 15);
+
+        assertThat(localisation1.getLatitude()).isGreaterThanOrEqualTo(localisationParamLimit.getLatitudeMIN());
+        assertThat(localisation2.getLatitude()).isGreaterThanOrEqualTo(localisationParamLimit.getLatitudeMIN());
+        assertThat(localisation3.getLatitude()).isGreaterThanOrEqualTo(localisationParamLimit.getLatitudeMIN());
     }
 
     @Test
     void latitude_topBarrel() {
-        int topline = localisationParamLimit.getLatitudeMAX();
-        assertThat(localisation.getLatitude()).isLessThanOrEqualTo(topline);
+        LocalisationParamLimit localisationParamLimit = new LocalisationParamLimit();
+
+        Localisation localisation1 = new Localisation(1L, "Gdańsk", "Polska", "Pomorskie", -15, 15);
+        Localisation localisation2 = new Localisation(2L, "Gdańsk", "Polska", "Pomorskie", 0, 15);
+        Localisation localisation3 = new Localisation(3L, "Gdańsk", "Polska", "Pomorskie", 90, 15);
+
+        assertThat(localisation1.getLatitude()).isLessThanOrEqualTo(localisationParamLimit.getLatitudeMAX());
+        assertThat(localisation2.getLatitude()).isLessThanOrEqualTo(localisationParamLimit.getLatitudeMAX());
+        assertThat(localisation3.getLatitude()).isLessThanOrEqualTo(localisationParamLimit.getLatitudeMAX());
     }
 
     @Test
     void longitue_bottomBarrel() {
-        int bottomLine = localisationParamLimit.getLongitudeMIN();
-        assertThat(localisation.getLongitude()).isGreaterThanOrEqualTo(bottomLine);
+        LocalisationParamLimit localisationParamLimit = new LocalisationParamLimit();
+
+        Localisation localisation1 = new Localisation(1L, "Gdańsk", "Polska", "Pomorskie", 15, -180);
+        Localisation localisation2 = new Localisation(2L, "Gdańsk", "Polska", "Pomorskie", 15, 0);
+        Localisation localisation3 = new Localisation(3L, "Gdańsk", "Polska", "Pomorskie", 15, 15);
+
+        assertThat(localisation1.getLatitude()).isGreaterThanOrEqualTo(localisationParamLimit.getLongitudeMIN());
+        assertThat(localisation2.getLatitude()).isGreaterThanOrEqualTo(localisationParamLimit.getLongitudeMIN());
+        assertThat(localisation3.getLatitude()).isGreaterThanOrEqualTo(localisationParamLimit.getLongitudeMIN());
     }
 
     @Test
     void longitudee_topBarrel() {
-        int topline = localisationParamLimit.getLongitudeMIN();
-        assertThat(localisation.getLongitude()).isLessThanOrEqualTo(topline);
+        LocalisationParamLimit localisationParamLimit = new LocalisationParamLimit();
+
+        Localisation localisation1 = new Localisation(1L, "Gdańsk", "Polska", "Pomorskie", 15, 15);
+        Localisation localisation2 = new Localisation(2L, "Gdańsk", "Polska", "Pomorskie", 15, 0);
+        Localisation localisation3 = new Localisation(3L, "Gdańsk", "Polska", "Pomorskie", 15, 180);
+
+        assertThat(localisation1.getLatitude()).isLessThanOrEqualTo(localisationParamLimit.getLongitudeMAX());
+        assertThat(localisation2.getLatitude()).isLessThanOrEqualTo(localisationParamLimit.getLongitudeMAX());
+        assertThat(localisation3.getLatitude()).isLessThanOrEqualTo(localisationParamLimit.getLongitudeMAX());
     }
 
 }

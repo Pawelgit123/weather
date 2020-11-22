@@ -12,17 +12,25 @@ public class AanExceptionHandlerController {
 
     @ExceptionHandler(BadLocalisationCreation.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    void badLocalisationCreation(BadLocalisationCreation e){
+    void badLocalisationCreation(BadLocalisationCreation e) {
         log.error(e.getMessage());
     }
+
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    void notFoundException(NotFoundException e){
+    void notFoundException(NotFoundException e) {
         log.error(e.getMessage());
     }
+
     @ExceptionHandler(DataOutOfBound.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    void dataOutOfBound(DataOutOfBound e){
+    void dataOutOfBound(DataOutOfBound e) {
+        log.error(e.getMessage());
+    }
+
+    @ExceptionHandler(BlankSpaceException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    void dataOutOfBound(BlankSpaceException e) {
         log.error(e.getMessage());
     }
 }

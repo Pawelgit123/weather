@@ -1,8 +1,10 @@
 package com.sda.weather.localisation;
 
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
 @Data
+@Component
 public class LocalisationDefinition {
 
     private String cityName;
@@ -11,14 +13,14 @@ public class LocalisationDefinition {
     private int latitude;
     private int longitude;
 
-    LocalisationDefinition localisationConverter(LocalisationDTO localisationDTO){
+    LocalisationDefinition localisationConverter(LocalisationDTO localisationDTO) {
 
         LocalisationDefinition localisationDefinition = new LocalisationDefinition();
-        this.cityName = localisationDTO.getCityName();
-        this.country = localisationDTO.getCountry();
-        this.region = localisationDTO.getRegion();
-        this.latitude = localisationDTO.getLatitude();
-        this.longitude = localisationDTO.getLongitude();
+        localisationDefinition.setCityName(localisationDTO.getCityName());
+        localisationDefinition.setCountry(localisationDTO.getCountry());
+        localisationDefinition.setRegion(localisationDTO.getRegion());
+        localisationDefinition.setLatitude(localisationDTO.getLatitude());
+        localisationDefinition.setLongitude(localisationDTO.getLongitude());
 
         return localisationDefinition;
     }
