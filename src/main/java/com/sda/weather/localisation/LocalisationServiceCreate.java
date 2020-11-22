@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 public class LocalisationServiceCreate {
 
     final LocalisationRepository localisationRepository;
+    final LocalisationParamLimit localisationParamLimit;
 
     Localisation createLocalisation (LocalisationDefinition localisationDefinition) {
 
@@ -22,11 +23,13 @@ public class LocalisationServiceCreate {
         if (localisationDefinition.getRegion().isEmpty()) {
             throw new BadLocalisationCreation("Region is empty");
         }
-        if (localisationDefinition.getLatitude()>90 && localisationDefinition.getLatitude()<-90){
+        if (localisationDefinition.getLatitude()>=localisationParamLimit.getLatitudeMIN()
+                && localisationDefinition.getLatitude()<=localisationParamLimit.getLatitudeMAX()){
             throw new DataOutOfBound("Latitude out of bound");
         }
-        if (localisationDefinition.getLongitude()>180 && localisationDefinition.getLongitude()<-180){
-            throw new DataOutOfBound("Latitude out of bound");
+        if (localisationDefinition.getLongitude()>=localisationParamLimit.getLongitudeMIN()
+                && localisationDefinition.getLongitude()<=localisationParamLimit.getLongitudeMAX()){
+            throw new DataOutOfBound("Longitude out of bound");
         }
 
         Localisation localisation = new Localisation();

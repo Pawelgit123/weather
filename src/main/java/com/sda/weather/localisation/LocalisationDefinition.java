@@ -5,11 +5,11 @@ import lombok.Data;
 @Data
 public class LocalisationDefinition {
 
-    String cityName;
-    String country;
-    String region;
-    int latitude;
-    int longitude;
+    private String cityName;
+    private String country;
+    private String region;
+    private int latitude;
+    private int longitude;
 
     LocalisationDefinition localisationConverter(LocalisationDTO localisationDTO){
 

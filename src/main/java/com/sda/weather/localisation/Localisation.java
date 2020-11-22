@@ -21,4 +21,5 @@ public class Localisation {
     String region;
     int latitude;
     int longitude;
+
 }
