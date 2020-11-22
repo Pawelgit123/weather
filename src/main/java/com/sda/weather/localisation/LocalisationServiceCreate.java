@@ -3,15 +3,16 @@ package com.sda.weather.localisation;
 import com.sda.weather.exceptions.BadLocalisationCreation;
 import com.sda.weather.exceptions.BlankSpaceException;
 import com.sda.weather.exceptions.DataOutOfBound;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Data
 public class LocalisationServiceCreate {
 
     final LocalisationRepository localisationRepository;
-    final LocalisationParamLimit localisationParamLimit;
 
     Localisation createLocalisation (LocalisationDefinition localisationDefinition) {
 
@@ -24,15 +25,14 @@ public class LocalisationServiceCreate {
 //        if (localisationDefinition.getRegion().isEmpty()) {
 //            throw new BadLocalisationCreation("Region is empty");
 //        }
-        if (localisationDefinition.getLatitude()>=localisationParamLimit.getLatitudeMIN()
-                && localisationDefinition.getLatitude()<=localisationParamLimit.getLatitudeMAX()){
+        if (localisationDefinition.getLatitude()<=-90
+                || localisationDefinition.getLatitude()>=90){
             throw new DataOutOfBound("Latitude out of bound");
         }
-        if (localisationDefinition.getLongitude()>=localisationParamLimit.getLongitudeMIN()
-                && localisationDefinition.getLongitude()<=localisationParamLimit.getLongitudeMAX()){
+        if (localisationDefinition.getLongitude()<=-180
+                || localisationDefinition.getLongitude()>=180){
             throw new DataOutOfBound("Longitude out of bound");
         }
-
         if(localisationDefinition.getCityName().isBlank()){
             throw new BlankSpaceException("Blank spaces in <name>");
         }

@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Optional;
 
 @Data
 @Entity
@@ -18,13 +19,19 @@ public class Localisation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
     @NotNull
-    String cityName;
+    private String cityName;
     @NotNull
-    String country;
-    String region;
-    int latitude;
-    int longitude;
+    private String country;
+    @NotNull
+    private String region;
+    @NotNull
+    private int latitude;
+    @NotNull
+    private int longitude;
 
+    public Optional<String> getRegion() {
+        return Optional.of(region);
+    }
 }
