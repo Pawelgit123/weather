@@ -33,9 +33,10 @@ class LocalisationServiceCreateTest {
         LocalisationDTO localisationDTO = new LocalisationDTO(
                 "","Polska","Pomorskie",15,15);
         LocalisationDefinition localisationDefinition = new LocalisationDefinition();
+        LocalisationParamLimit localisationParamLimit = new LocalisationParamLimit();
         LocalisationDefinition convertedLocalisation = localisationDefinition.localisationConverter(localisationDTO);
 
-        Throwable result = catchThrowable(()-> localisationServiceCreate.createLocalisation(convertedLocalisation));
+        Throwable result = catchThrowable(()-> localisationServiceCreate.createLocalisation(convertedLocalisation, localisationParamLimit));
 
         assertThat(result).isExactlyInstanceOf(BadLocalisationCreation.class);
     }
@@ -45,9 +46,10 @@ class LocalisationServiceCreateTest {
         LocalisationDTO localisationDTO = new LocalisationDTO(
                 "Gdańsk","","Pomorskie",15,15);
         LocalisationDefinition localisationDefinition = new LocalisationDefinition();
+        LocalisationParamLimit localisationParamLimit = new LocalisationParamLimit();
         LocalisationDefinition convertedLocalisation = localisationDefinition.localisationConverter(localisationDTO);
 
-        Throwable result = catchThrowable(()-> localisationServiceCreate.createLocalisation(convertedLocalisation));
+        Throwable result = catchThrowable(()-> localisationServiceCreate.createLocalisation(convertedLocalisation, localisationParamLimit));
 
         assertThat(result).isExactlyInstanceOf(BadLocalisationCreation.class);
     }
@@ -56,9 +58,10 @@ class LocalisationServiceCreateTest {
         LocalisationDTO localisationDTO = new LocalisationDTO(
                 "Gdańsk","Polskae","",15,15);
         LocalisationDefinition localisationDefinition = new LocalisationDefinition();
+        LocalisationParamLimit localisationParamLimit = new LocalisationParamLimit();
         LocalisationDefinition convertedLocalisation = localisationDefinition.localisationConverter(localisationDTO);
 
-        Throwable result = catchThrowable(()-> localisationServiceCreate.createLocalisation(convertedLocalisation));
+        Throwable result = catchThrowable(()-> localisationServiceCreate.createLocalisation(convertedLocalisation, localisationParamLimit));
 
         assertThat(result).isNotExactlyInstanceOf(BadLocalisationCreation.class);
     }
@@ -67,9 +70,10 @@ class LocalisationServiceCreateTest {
         LocalisationDTO localisationDTO = new LocalisationDTO(
                 "Gdańsk","Polska","Pomorskie",91,15);
         LocalisationDefinition localisationDefinition = new LocalisationDefinition();
+        LocalisationParamLimit localisationParamLimit = new LocalisationParamLimit();
         LocalisationDefinition convertedLocalisation = localisationDefinition.localisationConverter(localisationDTO);
 
-        Throwable result = catchThrowable(()-> localisationServiceCreate.createLocalisation(convertedLocalisation));
+        Throwable result = catchThrowable(()-> localisationServiceCreate.createLocalisation(convertedLocalisation, localisationParamLimit));
 
         assertThat(result).isExactlyInstanceOf(DataOutOfBound.class);
     }
@@ -78,9 +82,10 @@ class LocalisationServiceCreateTest {
         LocalisationDTO localisationDTO = new LocalisationDTO(
                 "Gdańsk","Polska","Pomorskie",15,181);
         LocalisationDefinition localisationDefinition = new LocalisationDefinition();
+        LocalisationParamLimit localisationParamLimit = new LocalisationParamLimit();
         LocalisationDefinition convertedLocalisation = localisationDefinition.localisationConverter(localisationDTO);
 
-        Throwable result = catchThrowable(()-> localisationServiceCreate.createLocalisation(convertedLocalisation));
+        Throwable result = catchThrowable(()-> localisationServiceCreate.createLocalisation(convertedLocalisation, localisationParamLimit));
 
         assertThat(result).isExactlyInstanceOf(DataOutOfBound.class);
     }
@@ -88,12 +93,37 @@ class LocalisationServiceCreateTest {
     @Test
     void localisationCreate_cityNameIsBlank() {
         LocalisationDTO localisationDTO = new LocalisationDTO(
-                "  ","   ","   ",15,15);
+                "  ","asd","asd",15,15);
         LocalisationDefinition localisationDefinition = new LocalisationDefinition();
+        LocalisationParamLimit localisationParamLimit = new LocalisationParamLimit();
         LocalisationDefinition convertedLocalisation = localisationDefinition.localisationConverter(localisationDTO);
 
-        Throwable result = catchThrowable(()-> localisationServiceCreate.createLocalisation(convertedLocalisation));
-        
+        Throwable result = catchThrowable(()-> localisationServiceCreate.createLocalisation(convertedLocalisation, localisationParamLimit));
+
+        assertThat(result).isExactlyInstanceOf(BlankSpaceException.class);
+    }
+    @Test
+    void localisationCreate_countryIsBlank() {
+        LocalisationDTO localisationDTO = new LocalisationDTO(
+                "asd","   ","asd",15,15);
+        LocalisationDefinition localisationDefinition = new LocalisationDefinition();
+        LocalisationParamLimit localisationParamLimit = new LocalisationParamLimit();
+        LocalisationDefinition convertedLocalisation = localisationDefinition.localisationConverter(localisationDTO);
+
+        Throwable result = catchThrowable(()-> localisationServiceCreate.createLocalisation(convertedLocalisation, localisationParamLimit));
+
+        assertThat(result).isExactlyInstanceOf(BlankSpaceException.class);
+    }
+    @Test
+    void localisationCreate_regionIsBlank() {
+        LocalisationDTO localisationDTO = new LocalisationDTO(
+                "asd","asd","   ",15,15);
+        LocalisationDefinition localisationDefinition = new LocalisationDefinition();
+        LocalisationParamLimit localisationParamLimit = new LocalisationParamLimit();
+        LocalisationDefinition convertedLocalisation = localisationDefinition.localisationConverter(localisationDTO);
+
+        Throwable result = catchThrowable(()-> localisationServiceCreate.createLocalisation(convertedLocalisation, localisationParamLimit));
+
         assertThat(result).isExactlyInstanceOf(BlankSpaceException.class);
     }
 

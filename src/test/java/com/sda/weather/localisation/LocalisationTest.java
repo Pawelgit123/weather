@@ -60,4 +60,5 @@ class LocalisationTest {
         assertThat(localisation2.getLongitude()).isLessThanOrEqualTo(localisationParamLimit.getLongitudeMAX());
         assertThat(localisation3.getLongitude()).isLessThanOrEqualTo(localisationParamLimit.getLongitudeMAX());
     }
+
 }

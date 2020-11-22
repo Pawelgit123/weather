@@ -9,12 +9,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-@Data
 public class LocalisationServiceCreate {
 
     final LocalisationRepository localisationRepository;
 
-    Localisation createLocalisation (LocalisationDefinition localisationDefinition) {
+    Localisation createLocalisation (LocalisationDefinition localisationDefinition, LocalisationParamLimit localisationParamLimit) {
 
         if (localisationDefinition.getCityName().isEmpty()) {
             throw new BadLocalisationCreation("City is empty");
@@ -25,12 +24,12 @@ public class LocalisationServiceCreate {
 //        if (localisationDefinition.getRegion().isEmpty()) {
 //            throw new BadLocalisationCreation("Region is empty");
 //        }
-        if (localisationDefinition.getLatitude()<=-90
-                || localisationDefinition.getLatitude()>=90){
+        if (localisationDefinition.getLatitude()<=localisationParamLimit.getLatitudeMIN()
+                || localisationDefinition.getLatitude()>=localisationParamLimit.getLatitudeMAX()){
             throw new DataOutOfBound("Latitude out of bound");
         }
-        if (localisationDefinition.getLongitude()<=-180
-                || localisationDefinition.getLongitude()>=180){
+        if (localisationDefinition.getLongitude()<=localisationParamLimit.getLongitudeMIN()
+                || localisationDefinition.getLongitude()>=localisationParamLimit.getLongitudeMAX()){
             throw new DataOutOfBound("Longitude out of bound");
         }
         if(localisationDefinition.getCityName().isBlank()){

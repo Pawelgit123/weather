@@ -42,8 +42,9 @@ public class LocalisationController {
     @PostMapping("localisation")
     @ResponseStatus(HttpStatus.CREATED)
     ResponseEntity<LocalisationDTO> createLocalisation(@RequestBody LocalisationDTO localisationDTO) {
+        LocalisationParamLimit localisationParamLimit = new LocalisationParamLimit();
         LocalisationDefinition converterdLocalisation = localisationDefinition.localisationConverter(localisationDTO);
-        Localisation localisation = localisationServiceCreate.createLocalisation(converterdLocalisation);
+        Localisation localisation = localisationServiceCreate.createLocalisation(converterdLocalisation, localisationParamLimit);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(localisationMapper.mapToLocalisation(localisation));
