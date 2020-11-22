@@ -1,14 +1,10 @@
 package com.sda.weather.localisation;
 
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Optional;
 
 @Data
@@ -20,15 +16,14 @@ public class Localisation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
+    @Column(nullable = false)
     private String cityName;
-    @NotNull
+    @Column(nullable = false)
     private String country;
-    @NotNull
     private String region;
-    @NotNull
+    @Column(nullable = false)
     private int latitude;
-    @NotNull
+    @Column(nullable = false)
     private int longitude;
 
     public Optional<String> getRegion() {

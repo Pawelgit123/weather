@@ -13,39 +13,35 @@ public class LocalisationServiceCreate {
 
     final LocalisationRepository localisationRepository;
 
-    Localisation createLocalisation (LocalisationDefinition localisationDefinition, LocalisationParamLimit localisationParamLimit) {
-
+    Localisation createLocalisation(LocalisationDefinition localisationDefinition) {
         if (localisationDefinition.getCityName().isEmpty()) {
             throw new BadLocalisationCreation("City is empty");
         }
         if (localisationDefinition.getCountry().isEmpty()) {
             throw new BadLocalisationCreation("Country is empty");
         }
-//        if (localisationDefinition.getRegion().isEmpty()) {
-//            throw new BadLocalisationCreation("Region is empty");
-//        }
-        if (localisationDefinition.getLatitude()<=localisationParamLimit.getLatitudeMIN()
-                || localisationDefinition.getLatitude()>=localisationParamLimit.getLatitudeMAX()){
+        if (localisationDefinition.getLatitude() <= LocalisationParamLimit.LATITUDE_MIN
+                || localisationDefinition.getLatitude() >= LocalisationParamLimit.LATITUDE_MAX) {
             throw new DataOutOfBound("Latitude out of bound");
         }
-        if (localisationDefinition.getLongitude()<=localisationParamLimit.getLongitudeMIN()
-                || localisationDefinition.getLongitude()>=localisationParamLimit.getLongitudeMAX()){
+        if (localisationDefinition.getLongitude() <= LocalisationParamLimit.LONGITUDE_MAX
+                || localisationDefinition.getLongitude() >= LocalisationParamLimit.LONGITUDE_MIN) {
             throw new DataOutOfBound("Longitude out of bound");
         }
-        if(localisationDefinition.getCityName().isBlank()){
+        if (localisationDefinition.getCityName().isBlank()) {
             throw new BlankSpaceException("Blank spaces in <name>");
         }
-        if(localisationDefinition.getCountry().isBlank()){
+        if (localisationDefinition.getCountry().isBlank()) {
             throw new BlankSpaceException("Blank spaces in <country>");
         }
-        if(localisationDefinition.getRegion().isBlank()){
+        if (localisationDefinition.getRegion().isBlank()) { // todo remove this validation
             throw new BlankSpaceException("Blank spaces in <region>");
         }
 
         Localisation localisation = new Localisation();
         localisation.setCityName(localisationDefinition.getCityName());
         localisation.setCountry(localisationDefinition.getCountry());
-        localisation.setRegion(localisationDefinition.getRegion());
+        localisation.setRegion(localisationDefinition.getRegion());     // todo if it is blank then don't save it
         localisation.setLatitude(localisationDefinition.getLatitude());
         localisation.setLongitude(localisation.getLongitude());
 

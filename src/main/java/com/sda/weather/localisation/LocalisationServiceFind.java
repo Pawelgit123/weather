@@ -11,7 +11,7 @@ public class LocalisationServiceFind {
     final LocalisationRepository localisationRepository;
 
     Localisation findLocalisationByID(Long id) {
-        return localisationRepository.findById(Long.valueOf(id))
+        return localisationRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("id of an entry: " + id));
     }
 }

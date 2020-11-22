@@ -1,16 +1,8 @@
 package com.sda.weather.localisation;
 
-import lombok.*;
-import org.springframework.stereotype.Component;
-
-@Getter
-@NoArgsConstructor
-@Component
 public class LocalisationParamLimit {
-
-    private final int latitudeMAX = 90;
-    private final int latitudeMIN = -90;
-    private final int longitudeMAX = 180;
-    private final int longitudeMIN = -180;
-
+    public static final int LATITUDE_MAX = 90;
+    public static final int LATITUDE_MIN = -90;
+    public static final int LONGITUDE_MAX = 180;
+    public static final int LONGITUDE_MIN = -180;
 }

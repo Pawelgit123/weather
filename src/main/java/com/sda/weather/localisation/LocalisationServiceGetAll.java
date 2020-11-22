@@ -11,10 +11,7 @@ public class LocalisationServiceGetAll {
 
     final LocalisationRepository localisationRepository;
 
-    List<Localisation> getAllLocalisations(){
-
-        List<Localisation> localisations = localisationRepository.findAll();
-
-        return localisations;
+    List<Localisation> getAllLocalisations() {
+        return localisationRepository.findAll();
     }
 }

@@ -6,8 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,30 +23,24 @@ public class LocalisationController {
     @GetMapping("/localisation/{id}")
     LocalisationDTO getLocalisationByID(@PathVariable Long id) {
         Localisation localisation = localisationServiceFind.findLocalisationByID(id);
-        LocalisationDTO localisationDTO = localisationMapper.mapToLocalisation(localisation);
+        LocalisationDTO localisationDTO = localisationMapper.mapToLocalisationDto(localisation);
         return localisationDTO;
     }
 
     @GetMapping("/localisation/")
     List<LocalisationDTO> getLocalisations() {
-
-        List<Localisation> localisations = localisationServiceGetAll.getAllLocalisations();
-        List<LocalisationDTO> dtos = new ArrayList<>();
-        localisations.forEach(p -> dtos.add(localisationMapper.mapToLocalisation(p)));
-
-        return dtos;
+        return localisationServiceGetAll.getAllLocalisations().stream()
+                .map(localisationMapper::mapToLocalisationDto)
+                .collect(Collectors.toList());
     }
 
-    @PostMapping("localisation")
+    @PostMapping("/localisation")
     @ResponseStatus(HttpStatus.CREATED)
     ResponseEntity<LocalisationDTO> createLocalisation(@RequestBody LocalisationDTO localisationDTO) {
-        LocalisationParamLimit localisationParamLimit = new LocalisationParamLimit();
-        LocalisationDefinition converterdLocalisation = localisationDefinition.localisationConverter(localisationDTO);
-        Localisation localisation = localisationServiceCreate.createLocalisation(converterdLocalisation, localisationParamLimit);
+        LocalisationDefinition convertedLocalisation = localisationDefinition.localisationConverter(localisationDTO);
+        Localisation localisation = localisationServiceCreate.createLocalisation(convertedLocalisation);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(localisationMapper.mapToLocalisation(localisation));
+                .body(localisationMapper.mapToLocalisationDto(localisation));
     }
-
-    // todo LocalisationDTO -> LocalisationDefinition -> pass to a service -> Localisation -> LocalisationDTO
 }

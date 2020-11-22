@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LocalisationDTO {
 
+    Long id;
     String cityName;
     String country;
     String region;
