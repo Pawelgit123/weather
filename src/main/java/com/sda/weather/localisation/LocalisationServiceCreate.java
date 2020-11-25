@@ -24,24 +24,29 @@ public class LocalisationServiceCreate {
                 || localisationDefinition.getLatitude() >= LocalisationParamLimit.LATITUDE_MAX) {
             throw new DataOutOfBound("Latitude out of bound");
         }
-        if (localisationDefinition.getLongitude() <= LocalisationParamLimit.LONGITUDE_MAX
-                || localisationDefinition.getLongitude() >= LocalisationParamLimit.LONGITUDE_MIN) {
-            throw new DataOutOfBound("Longitude out of bound");
-        }
         if (localisationDefinition.getCityName().isBlank()) {
             throw new BlankSpaceException("Blank spaces in <name>");
         }
         if (localisationDefinition.getCountry().isBlank()) {
             throw new BlankSpaceException("Blank spaces in <country>");
         }
-        if (localisationDefinition.getRegion().isBlank()) { // todo remove this validation
+        // zamieniłem miejscami warunki i testy nagle działają? jaki jest priorytet wyjątków?
+
+        if (localisationDefinition.getRegion().isBlank()) {
             throw new BlankSpaceException("Blank spaces in <region>");
+        }
+
+        if (localisationDefinition.getLongitude() <= LocalisationParamLimit.LONGITUDE_MAX
+                || localisationDefinition.getLongitude() >= LocalisationParamLimit.LONGITUDE_MIN) {
+            throw new DataOutOfBound("Longitude out of bound");
         }
 
         Localisation localisation = new Localisation();
         localisation.setCityName(localisationDefinition.getCityName());
         localisation.setCountry(localisationDefinition.getCountry());
-        localisation.setRegion(localisationDefinition.getRegion());     // todo if it is blank then don't save it
+        if (!localisationDefinition.getRegion().isBlank()) {
+            localisation.setRegion(localisationDefinition.getRegion());
+        }
         localisation.setLatitude(localisationDefinition.getLatitude());
         localisation.setLongitude(localisation.getLongitude());
 

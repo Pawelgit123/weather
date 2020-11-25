@@ -85,7 +85,6 @@ class LocalisationServiceCreateTest {
 
     @Test
     void localisationCreate_cityNameIsBlank() {
-        // todo check
         LocalisationDTO localisationDTO = new LocalisationDTO(null, "  ", "asd", "asd", 15, 15);
         LocalisationDefinition localisationDefinition = new LocalisationDefinition();
         LocalisationDefinition convertedLocalisation = localisationDefinition.localisationConverter(localisationDTO);
@@ -97,8 +96,6 @@ class LocalisationServiceCreateTest {
 
     @Test
     void localisationCreate_countryIsBlank() {
-        // todo check
-
         LocalisationDTO localisationDTO = new LocalisationDTO(null, "asd", "   ", "asd", 15, 15);
         LocalisationDefinition localisationDefinition = new LocalisationDefinition();
         LocalisationDefinition convertedLocalisation = localisationDefinition.localisationConverter(localisationDTO);
@@ -107,11 +104,8 @@ class LocalisationServiceCreateTest {
 
         assertThat(result).isExactlyInstanceOf(BlankSpaceException.class);
     }
-
     @Test
     void localisationCreate_regionIsBlank() {
-        // todo check
-
         LocalisationDTO localisationDTO = new LocalisationDTO(null, "asd", "asd", "   ", 15, 15);
         LocalisationDefinition localisationDefinition = new LocalisationDefinition();
         LocalisationDefinition convertedLocalisation = localisationDefinition.localisationConverter(localisationDTO);

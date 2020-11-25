@@ -37,9 +37,9 @@ class LocalisationTest {
         Localisation localisation2 = new Localisation(2L, "Gdańsk", "Polska", "Pomorskie", 15, 0);
         Localisation localisation3 = new Localisation(3L, "Gdańsk", "Polska", "Pomorskie", 15, 15);
 
-        assertThat(localisation1.getLongitude()).isGreaterThanOrEqualTo(LocalisationParamLimit.LONGITUDE_MAX);
-        assertThat(localisation2.getLongitude()).isGreaterThanOrEqualTo(LocalisationParamLimit.LONGITUDE_MAX);
-        assertThat(localisation3.getLongitude()).isGreaterThanOrEqualTo(LocalisationParamLimit.LONGITUDE_MAX);
+        assertThat(localisation1.getLongitude()).isGreaterThanOrEqualTo(LocalisationParamLimit.LONGITUDE_MIN);
+        assertThat(localisation2.getLongitude()).isGreaterThanOrEqualTo(LocalisationParamLimit.LONGITUDE_MIN);
+        assertThat(localisation3.getLongitude()).isGreaterThanOrEqualTo(LocalisationParamLimit.LONGITUDE_MIN);
     }
 
     @Test
@@ -48,8 +48,8 @@ class LocalisationTest {
         Localisation localisation2 = new Localisation(2L, "Gdańsk", "Polska", "Pomorskie", 15, 0);
         Localisation localisation3 = new Localisation(3L, "Gdańsk", "Polska", "Pomorskie", 15, 180);
 
-        assertThat(localisation1.getLongitude()).isLessThanOrEqualTo(LocalisationParamLimit.LONGITUDE_MIN);
-        assertThat(localisation2.getLongitude()).isLessThanOrEqualTo(LocalisationParamLimit.LONGITUDE_MIN);
-        assertThat(localisation3.getLongitude()).isLessThanOrEqualTo(LocalisationParamLimit.LONGITUDE_MIN);
+        assertThat(localisation1.getLongitude()).isLessThanOrEqualTo(LocalisationParamLimit.LONGITUDE_MAX);
+        assertThat(localisation2.getLongitude()).isLessThanOrEqualTo(LocalisationParamLimit.LONGITUDE_MAX);
+        assertThat(localisation3.getLongitude()).isLessThanOrEqualTo(LocalisationParamLimit.LONGITUDE_MAX);
     }
 }
