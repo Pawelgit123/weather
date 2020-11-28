@@ -10,6 +10,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Slf4j
 public class AanExceptionHandlerController {
 
+    @ExceptionHandler(ForecastAPiFailure.class)
+    @ResponseStatus(HttpStatus.BAD_GATEWAY)
+    void forecastApiFailure(ForecastAPiFailure e){
+        log.error(e.getMessage());
+    }
+
     @ExceptionHandler(DataOutOfBound.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     void dataOufOfBound(DataOutOfBound e) {
