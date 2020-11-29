@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sda.weather.ApiConfiguration;
 import com.sda.weather.exceptions.ForecastAPiFailure;
 import com.sda.weather.localisation.Localisation;
+import com.sda.weather.localisation.LocalisationDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,19 +16,18 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ForecastService {
+public class ForecastServiceGet {
 
     private ApiConfiguration apiConfiguration;
+    private ForecastDataMapper forecastDataMapper;
     private RestTemplate restTemplate = new RestTemplate();
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    List<ForecastItem> list;
 
-
-    public ForecastItem getForecast(Localisation localisation) {
+    ForecastItem getCurrentWeatherByCityName(LocalisationDTO localisationDTO) {
 // http://api.openweathermap.org/data/2.5/find?q=Gdansk&units=metric&appid=a5bd02ecf7c1f72449ae4d087d08d275
         String ulr = apiConfiguration.getUrl();
-        String city = localisation.getCityName();
+        String city = localisationDTO.getCityName();
         String units = apiConfiguration.getUnits();
         String apikey = apiConfiguration.getApikey();
         String urlFinal = ulr+city+units+apikey;
@@ -39,8 +39,8 @@ public class ForecastService {
         String responseBody = responseEntity.getBody();
         try {
             ForecastItem forecastItem = objectMapper.readValue(responseBody, ForecastItem.class);
-
-
+            List<ForecastData> forecastDataList = localisationDTO.getForecastDataList();
+            forecastDataList.add(forecastDataMapper.mapToForecastData(forecastItem));
 
 
             return forecastItem;
@@ -49,5 +49,12 @@ public class ForecastService {
             return null;
         }
     }
+
+    // https://api.openweathermap.org/data/2.5/onecall?lat=33.441792&lon=-94.037689&exclude=hourly,minutely&appid=a5bd02ecf7c1f72449ae4d087d08d275
+    // daily chicago
+
+    // https://api.openweathermap.org/data/2.5/onecall?lat=33.441792&lon=-94.037689&units=metric&exclude=hourly,minutely&appid=a5bd02ecf7c1f72449ae4d087d08d275
+    // metric sys
+
 
 }

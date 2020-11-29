@@ -1,10 +1,12 @@
 package com.sda.weather.localisation;
 
+import com.sda.weather.forecast.ForecastData;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Optional;
 
 @Data
@@ -25,6 +27,9 @@ public class Localisation {
     private int latitude;
     @Column(nullable = false)
     private int longitude;
+
+    @OneToMany(mappedBy = "localisation", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private List<ForecastData> forecastDataList;
 
     public Optional<String> getRegion() {
         return Optional.of(region);

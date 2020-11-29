@@ -1,8 +1,11 @@
 package com.sda.weather.localisation;
 
+import com.sda.weather.forecast.ForecastData;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -15,4 +18,5 @@ public class LocalisationDTO {
     String region;
     int latitude;
     int longitude;
+    List<ForecastData> forecastDataList;
 }
