@@ -13,8 +13,8 @@ public class LocalisationDefinition {
     private String cityName;
     private String country;
     private String region;
-    private int latitude;
-    private int longitude;
+    private float latitude;
+    private float longitude;
     private List<ForecastData> forecastData;
 
     LocalisationDefinition localisationConverter(LocalisationDTO localisationDTO) {

@@ -3,6 +3,7 @@ package com.sda.weather.localisation;
 import com.sda.weather.exceptions.BadLocalisationCreation;
 import com.sda.weather.exceptions.BlankSpaceException;
 import com.sda.weather.exceptions.DataOutOfBound;
+import com.sda.weather.forecast.ForecastData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,6 +11,9 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -27,10 +31,11 @@ class LocalisationServiceCreateTest {
     void setup() {
         localisationRepository.deleteAll();
     }
+    List<ForecastData> forecastDataList = new ArrayList<>();
 
     @Test
     void localisationCreate_MissingCityName() {
-        LocalisationDTO localisationDTO = new LocalisationDTO(null, "", "Polska", "Pomorskie", 15, 15);
+        LocalisationDTO localisationDTO = new LocalisationDTO(null, "", "Polska", "Pomorskie", 15, 15, forecastDataList);
         LocalisationDefinition localisationDefinition = new LocalisationDefinition();
         LocalisationDefinition convertedLocalisation = localisationDefinition.localisationConverter(localisationDTO);
 
@@ -41,7 +46,7 @@ class LocalisationServiceCreateTest {
 
     @Test
     void localisationCreate_MissingCountry() {
-        LocalisationDTO localisationDTO = new LocalisationDTO(null, "Gdańsk", "", "Pomorskie", 15, 15);
+        LocalisationDTO localisationDTO = new LocalisationDTO(null, "Gdańsk", "", "Pomorskie", 15, 15, forecastDataList);
         LocalisationDefinition localisationDefinition = new LocalisationDefinition();
         LocalisationDefinition convertedLocalisation = localisationDefinition.localisationConverter(localisationDTO);
 
@@ -52,7 +57,7 @@ class LocalisationServiceCreateTest {
 
     @Test
     void localisationCreate_RegionOptional() {
-        LocalisationDTO localisationDTO = new LocalisationDTO(null, "Gdańsk", "Polskae", "", 15, 15);
+        LocalisationDTO localisationDTO = new LocalisationDTO(null, "Gdańsk", "Polskae", "", 15, 15, forecastDataList);
         LocalisationDefinition localisationDefinition = new LocalisationDefinition();
         LocalisationDefinition convertedLocalisation = localisationDefinition.localisationConverter(localisationDTO);
 
@@ -63,7 +68,7 @@ class LocalisationServiceCreateTest {
 
     @Test
     void localisationCreate_latitudeOutOfBound() {
-        LocalisationDTO localisationDTO = new LocalisationDTO(null, "Gdańsk", "Polska", "Pomorskie", 91, 15);
+        LocalisationDTO localisationDTO = new LocalisationDTO(null, "Gdańsk", "Polska", "Pomorskie", 91, 15, forecastDataList);
         LocalisationDefinition localisationDefinition = new LocalisationDefinition();
         LocalisationDefinition convertedLocalisation = localisationDefinition.localisationConverter(localisationDTO);
 
@@ -74,7 +79,7 @@ class LocalisationServiceCreateTest {
 
     @Test
     void localisationCreate_longitudeOutOfBound() {
-        LocalisationDTO localisationDTO = new LocalisationDTO(null, "Gdańsk", "Polska", "Pomorskie", 15, 181);
+        LocalisationDTO localisationDTO = new LocalisationDTO(null, "Gdańsk", "Polska", "Pomorskie", 15, 181, forecastDataList);
         LocalisationDefinition localisationDefinition = new LocalisationDefinition();
         LocalisationDefinition convertedLocalisation = localisationDefinition.localisationConverter(localisationDTO);
 
@@ -85,7 +90,7 @@ class LocalisationServiceCreateTest {
 
     @Test
     void localisationCreate_cityNameIsBlank() {
-        LocalisationDTO localisationDTO = new LocalisationDTO(null, "  ", "asd", "asd", 15, 15);
+        LocalisationDTO localisationDTO = new LocalisationDTO(null, "  ", "asd", "asd", 15, 15, forecastDataList);
         LocalisationDefinition localisationDefinition = new LocalisationDefinition();
         LocalisationDefinition convertedLocalisation = localisationDefinition.localisationConverter(localisationDTO);
 
@@ -96,7 +101,7 @@ class LocalisationServiceCreateTest {
 
     @Test
     void localisationCreate_countryIsBlank() {
-        LocalisationDTO localisationDTO = new LocalisationDTO(null, "asd", "   ", "asd", 15, 15);
+        LocalisationDTO localisationDTO = new LocalisationDTO(null, "asd", "   ", "asd", 15, 15, forecastDataList);
         LocalisationDefinition localisationDefinition = new LocalisationDefinition();
         LocalisationDefinition convertedLocalisation = localisationDefinition.localisationConverter(localisationDTO);
 
@@ -106,7 +111,7 @@ class LocalisationServiceCreateTest {
     }
     @Test
     void localisationCreate_regionIsBlank() {
-        LocalisationDTO localisationDTO = new LocalisationDTO(null, "asd", "asd", "   ", 15, 15);
+        LocalisationDTO localisationDTO = new LocalisationDTO(null, "asd", "asd", "   ", 15, 15, forecastDataList);
         LocalisationDefinition localisationDefinition = new LocalisationDefinition();
         LocalisationDefinition convertedLocalisation = localisationDefinition.localisationConverter(localisationDTO);
 

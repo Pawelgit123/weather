@@ -16,7 +16,7 @@ public class LocalisationDTO {
     String cityName;
     String country;
     String region;
-    int latitude;
-    int longitude;
+    float latitude;
+    float longitude;
     List<ForecastData> forecastDataList;
 }

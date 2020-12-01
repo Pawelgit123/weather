@@ -24,9 +24,9 @@ public class Localisation {
     private String country;
     private String region;
     @Column(nullable = false)
-    private int latitude;
+    private float latitude;
     @Column(nullable = false)
-    private int longitude;
+    private float longitude;
 
     @OneToMany(mappedBy = "localisation", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<ForecastData> forecastDataList;
