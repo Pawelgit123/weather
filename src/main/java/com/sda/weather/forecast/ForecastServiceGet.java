@@ -20,13 +20,13 @@ public class ForecastServiceGet {
 
     private ApiConfiguration apiConfiguration;
     private ForecastDataMapper forecastDataMapper;
-    private RestTemplate restTemplate = new RestTemplate();
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final RestTemplate restTemplate = new RestTemplate();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
 
     ForecastItem getCurrentWeatherByCityName(LocalisationDTO localisationDTO) {
 // http://api.openweathermap.org/data/2.5/find?q=Gdansk&units=metric&appid=a5bd02ecf7c1f72449ae4d087d08d275
-        String ulr = apiConfiguration.getUrl();
+        String ulr = apiConfiguration.getUrlCurrent();
         String city = localisationDTO.getCityName();
         String units = apiConfiguration.getUnits();
         String apikey = apiConfiguration.getApikey();
@@ -39,11 +39,38 @@ public class ForecastServiceGet {
         String responseBody = responseEntity.getBody();
         try {
             ForecastItem forecastItem = objectMapper.readValue(responseBody, ForecastItem.class);
+//            List<ForecastData> forecastDataList = localisationDTO.getForecastDataList();
+//            forecastDataList.add(forecastDataMapper.mapToForecastData(forecastItem));
+
+            return forecastItem;
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    List<ForecastData> getForecastByCityName(LocalisationDTO localisationDTO) {
+        String ulr = apiConfiguration.getUrlForecast();
+        String units = apiConfiguration.getUnits();
+        String apikey = apiConfiguration.getApikey();
+        float lat = localisationDTO.getLatitude();
+        float lon = localisationDTO.getLongitude();
+        String exlude = "&exclude=hourly,minutely";
+        String urlFinal = ulr+"lat="+lat+"&lon="+lon+units+exlude+apikey;
+
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity(urlFinal, String.class);
+        if (!responseEntity.getStatusCode().is2xxSuccessful()) {
+            throw new ForecastAPiFailure("Server fail");
+        }
+        String responseBody = responseEntity.getBody();
+        try {
+            ForecastItem forecastItem = objectMapper.readValue(responseBody, ForecastItem.class);
             List<ForecastData> forecastDataList = localisationDTO.getForecastDataList();
             forecastDataList.add(forecastDataMapper.mapToForecastData(forecastItem));
 
+            // nie wiem czy to dobrze działa, dostaje 7 obiektów i muszę je zapisać jakoś..
 
-            return forecastItem;
+            return forecastDataList;
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             return null;

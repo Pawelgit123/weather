@@ -18,35 +18,53 @@ import java.util.stream.Collectors;
 public class ForecastController {
 
     final ForecastServiceGet forecastServiceGet;
+    final ForecastServiceUpdate forecastServiceUpdate;
     final LocalisationServiceGetAll localisationServiceGetAll;
     final LocalisationMapper localisationMapper;
 
-    // dla current nie ma być listy
-
     @GetMapping("/localisation/current/{cityName}")
-    List<ForecastData> getForecastByCityName(@PathVariable String cityName) {
+    ForecastItem getCurrentWeatherByCityName(@PathVariable String cityName) {
         List<Localisation> localisations = localisationServiceGetAll.getAllLocalisations();
-        Set<LocalisationDTO> foundLocalisationDTO = localisations.stream()
+        Set<Localisation> foundLocalisation = localisations.stream()
                 .filter(p -> p.getCityName().equals(cityName))
-                .map(localisationMapper::mapToLocalisationDto)
                 .collect(Collectors.toSet());
-        if (!foundLocalisationDTO.isEmpty()) {
-            LocalisationDTO localisationDTO = foundLocalisationDTO.stream().findFirst().orElseThrow();
 
-            forecastServiceGet.getCurrentWeatherByCityName(localisationDTO);
-
-            // drugi DTO ma zaktualizować liste w localisation?
-
-            return foundLocalisationDTO.stream()
+        if (!foundLocalisation.isEmpty()) {
+            LocalisationDTO foundLocalisationDTO = foundLocalisation.stream()
+                    .map(localisationMapper::mapToLocalisationDto)
                     .findFirst()
-                    .get().getForecastDataList();
+                    .orElseThrow();
 
-            // pierwszy DTO jest do sprawdzenia a drugi ma mieć już zaaktualizowane dane?
-
+            return forecastServiceGet.getCurrentWeatherByCityName(foundLocalisationDTO);
         } else {
             throw new NotFoundException("City name not in DataBase");
         }
     }
 
+    @GetMapping("/localisation/forecast/{cityName}")
+    List<ForecastData> getForecastByCityCoordinattes(@PathVariable String cityName) {
+        List<Localisation> localisations = localisationServiceGetAll.getAllLocalisations();
+        Set<Localisation> foundLocalisation = localisations.stream()
+                .filter(p -> p.getCityName().equals(cityName))
+                .collect(Collectors.toSet());
+
+        if (!foundLocalisation.isEmpty()) {
+            LocalisationDTO foundLocalisationDTO = foundLocalisation.stream()
+                    .map(localisationMapper::mapToLocalisationDto)
+                    .findFirst()
+                    .orElseThrow();
+
+            Localisation localisation = foundLocalisation.stream()
+                    .findFirst()
+                    .orElseThrow();
+
+            forecastServiceGet.getForecastByCityName(foundLocalisationDTO);
+            forecastServiceUpdate.updateForecastDateListForLocalisation(foundLocalisationDTO,localisation);
+
+            return localisation.getForecastDataList();
+        } else {
+            throw new NotFoundException("City name not in DataBase");
+        }
+    }
 
 }

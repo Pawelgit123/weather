@@ -11,6 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class ApiConfiguration {
 
     private String apikey;
-    private String url;
+    private String urlCurrent;
+    private String urlForecast;
     private String units;
 }
