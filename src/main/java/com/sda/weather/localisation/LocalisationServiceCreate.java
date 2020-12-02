@@ -36,8 +36,8 @@ public class LocalisationServiceCreate {
             throw new BlankSpaceException("Blank spaces in <region>");
         }
 
-        if (localisationDefinition.getLongitude() <= LocalisationParamLimit.LONGITUDE_MAX
-                || localisationDefinition.getLongitude() >= LocalisationParamLimit.LONGITUDE_MIN) {
+        if (localisationDefinition.getLongitude() <= LocalisationParamLimit.LONGITUDE_MIN
+                || localisationDefinition.getLongitude() >= LocalisationParamLimit.LONGITUDE_MAX) {
             throw new DataOutOfBound("Longitude out of bound");
         }
 
@@ -48,7 +48,7 @@ public class LocalisationServiceCreate {
             localisation.setRegion(localisationDefinition.getRegion());
         }
         localisation.setLatitude(localisationDefinition.getLatitude());
-        localisation.setLongitude(localisation.getLongitude());
+        localisation.setLongitude(localisationDefinition.getLongitude());
 
         return localisationRepository.save(localisation);
     }

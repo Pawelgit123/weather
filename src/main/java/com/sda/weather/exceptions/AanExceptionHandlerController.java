@@ -16,15 +16,15 @@ public class AanExceptionHandlerController {
         log.error(e.getMessage());
     }
 
-    @ExceptionHandler(DataOutOfBound.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    void dataOufOfBound(DataOutOfBound e) {
-        log.error(e.getMessage());
-    }
-
     @ExceptionHandler(BlankSpaceException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     void blankSpace(BlankSpaceException e) {
+        log.error(e.getMessage());
+    }
+
+    @ExceptionHandler(DataOutOfBound.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    void dataOufOfBound(DataOutOfBound e) {
         log.error(e.getMessage());
     }
 
