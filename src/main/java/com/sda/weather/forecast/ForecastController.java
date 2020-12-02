@@ -1,5 +1,6 @@
 package com.sda.weather.forecast;
 
+import com.sda.weather.ApiConfiguration;
 import com.sda.weather.exceptions.NotFoundException;
 import com.sda.weather.localisation.*;
 import lombok.RequiredArgsConstructor;
@@ -21,10 +22,12 @@ public class ForecastController {
     final ForecastServiceUpdate forecastServiceUpdate;
     final LocalisationServiceGetAll localisationServiceGetAll;
     final LocalisationMapper localisationMapper;
+    final ApiConfiguration apiConfiguration;
 
     @GetMapping("/localisation/current/{cityName}")
     ForecastItem getCurrentWeatherByCityName(@PathVariable String cityName) {
         List<Localisation> localisations = localisationServiceGetAll.getAllLocalisations();
+
         Set<Localisation> foundLocalisation = localisations.stream()
                 .filter(p -> p.getCityName().equals(cityName))
                 .collect(Collectors.toSet());
@@ -59,7 +62,7 @@ public class ForecastController {
                     .orElseThrow();
 
             forecastServiceGet.getForecastByCityName(foundLocalisationDTO);
-            forecastServiceUpdate.updateForecastDateListForLocalisation(foundLocalisationDTO,localisation);
+            forecastServiceUpdate.updateForecastDateListForLocalisation(foundLocalisationDTO, localisation);
 
             return localisation.getForecastDataList();
         } else {
@@ -67,4 +70,44 @@ public class ForecastController {
         }
     }
 
+    @GetMapping("/localisation/currenttest/{cityName}")
+    String getCurrentWeatherByCityNameTest(@PathVariable String cityName) {
+        List<Localisation> localisations = localisationServiceGetAll.getAllLocalisations();
+        Localisation localisation = localisations.stream()
+                .filter(p ->p.getCityName().equals(cityName))
+                .findFirst()
+                .orElseThrow();
+
+        LocalisationDTO localisationDTO = localisationMapper.mapToLocalisationDto(localisation);
+
+        String ulr = apiConfiguration.getUrlCurrent();
+        String city = localisationDTO.getCityName();
+        String units = apiConfiguration.getUnits();
+        String apikey = apiConfiguration.getApikey();
+        String urlFinal = ulr+city+units+apikey;
+
+        return urlFinal;
+    }
+
+    @GetMapping("/localisation/currenttest2/{cityName}")
+    LocalisationDTO getCurrentWeatherByCityNameTestt(@PathVariable String cityName) {
+        List<Localisation> localisations = localisationServiceGetAll.getAllLocalisations();
+
+        Set<Localisation> foundLocalisation = localisations.stream()
+                .filter(p -> p.getCityName().equals(cityName))
+                .collect(Collectors.toSet());
+
+        if (!foundLocalisation.isEmpty()) {
+            LocalisationDTO foundLocalisationDTO = foundLocalisation.stream()
+                    .map(localisationMapper::mapToLocalisationDto)
+                    .findFirst()
+                    .orElseThrow();
+            return foundLocalisationDTO;
+        } else {
+            return null;
+        }
+    }
 }
+
+
+

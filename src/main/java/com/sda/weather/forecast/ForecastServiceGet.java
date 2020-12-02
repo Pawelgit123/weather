@@ -39,6 +39,16 @@ public class ForecastServiceGet {
         String responseBody = responseEntity.getBody();
         try {
             ForecastItem forecastItem = objectMapper.readValue(responseBody, ForecastItem.class);
+//            int airTemperature = forecastItem.getAirTemperature();
+//            int airPressure = forecastItem.getAirPressure();
+//            int airHumidity = forecastItem.getAirHumidity();
+//            String windDirection = forecastItem.getWindDirection();
+//            int windSpeed = forecastItem.getWindSpeed();
+//
+//            ForecastData forecastData = new ForecastData(airHumidity,airTemperature,airPressure,airHumidity,windDirection,windSpeed,localisationDTO)
+//
+
+
 //            List<ForecastData> forecastDataList = localisationDTO.getForecastDataList();
 //            forecastDataList.add(forecastDataMapper.mapToForecastData(forecastItem));
 
@@ -82,6 +92,5 @@ public class ForecastServiceGet {
 
     // https://api.openweathermap.org/data/2.5/onecall?lat=33.441792&lon=-94.037689&units=metric&exclude=hourly,minutely&appid=a5bd02ecf7c1f72449ae4d087d08d275
     // metric sys
-
 
 }
