@@ -25,7 +25,7 @@ public class ForecastController {
     final ApiConfiguration apiConfiguration;
 
     @GetMapping("/localisation/current/{cityName}")
-    ForecastItem getCurrentWeatherByCityName(@PathVariable String cityName) {
+    ForecastData getCurrentWeatherByCityName(@PathVariable String cityName) {
         List<Localisation> localisations = localisationServiceGetAll.getAllLocalisations();
 
         Set<Localisation> foundLocalisation = localisations.stream()
@@ -45,7 +45,7 @@ public class ForecastController {
     }
 
     @GetMapping("/localisation/forecast/{cityName}")
-    List<ForecastData> getForecastByCityCoordinattes(@PathVariable String cityName) {
+    List<ForecastData> getForecastByCityCoordinates(@PathVariable String cityName) {
         List<Localisation> localisations = localisationServiceGetAll.getAllLocalisations();
         Set<Localisation> foundLocalisation = localisations.stream()
                 .filter(p -> p.getCityName().equals(cityName))
@@ -70,8 +70,8 @@ public class ForecastController {
         }
     }
 
-    @GetMapping("/localisation/currenttest/{cityName}")
-    String getCurrentWeatherByCityNameTest(@PathVariable String cityName) {
+    @GetMapping("/localisation/urltest/{cityName}")
+    String TESTurl(@PathVariable String cityName) {
         List<Localisation> localisations = localisationServiceGetAll.getAllLocalisations();
         Localisation localisation = localisations.stream()
                 .filter(p ->p.getCityName().equals(cityName))
@@ -89,8 +89,8 @@ public class ForecastController {
         return urlFinal;
     }
 
-    @GetMapping("/localisation/currenttest2/{cityName}")
-    LocalisationDTO getCurrentWeatherByCityNameTestt(@PathVariable String cityName) {
+    @GetMapping("/localisation/test/{cityName}")
+    LocalisationDTO TESTcontroller(@PathVariable String cityName) {
         List<Localisation> localisations = localisationServiceGetAll.getAllLocalisations();
 
         Set<Localisation> foundLocalisation = localisations.stream()

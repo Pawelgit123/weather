@@ -24,7 +24,7 @@ public class ForecastServiceGet {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
 
-    ForecastItem getCurrentWeatherByCityName(LocalisationDTO localisationDTO) {
+    ForecastData getCurrentWeatherByCityName(LocalisationDTO localisationDTO) {
 // http://api.openweathermap.org/data/2.5/find?q=Gdansk&units=metric&appid=a5bd02ecf7c1f72449ae4d087d08d275
         String ulr = apiConfiguration.getUrlCurrent();
         String city = localisationDTO.getCityName();
@@ -39,20 +39,26 @@ public class ForecastServiceGet {
         String responseBody = responseEntity.getBody();
         try {
             ForecastItem forecastItem = objectMapper.readValue(responseBody, ForecastItem.class);
+
+            ForecastData forecastData = forecastDataMapper.mapToForecastData(forecastItem);
+            List<ForecastData> forecastDataList = localisationDTO.getForecastDataList();
+            forecastDataList.add(forecastData);
+
+
 //            int airTemperature = forecastItem.getAirTemperature();
 //            int airPressure = forecastItem.getAirPressure();
 //            int airHumidity = forecastItem.getAirHumidity();
 //            String windDirection = forecastItem.getWindDirection();
 //            int windSpeed = forecastItem.getWindSpeed();
 //
-//            ForecastData forecastData = new ForecastData(airHumidity,airTemperature,airPressure,airHumidity,windDirection,windSpeed,localisationDTO)
+//            ForecastDataDTO forecastDataDTO = new ForecastDataDTO(airHumidity,airTemperature,airPressure,airHumidity,windDirection,windSpeed);
 //
 
 
 //            List<ForecastData> forecastDataList = localisationDTO.getForecastDataList();
 //            forecastDataList.add(forecastDataMapper.mapToForecastData(forecastItem));
 
-            return forecastItem;
+            return forecastData;
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             return null;
@@ -78,7 +84,7 @@ public class ForecastServiceGet {
             List<ForecastData> forecastDataList = localisationDTO.getForecastDataList();
             forecastDataList.add(forecastDataMapper.mapToForecastData(forecastItem));
 
-            // nie wiem czy to dobrze działa, dostaje 7 obiektów i muszę je zapisać jakoś..
+            // dostaje 7 obiektów i muszę je zapisać jakoś.. może json jest zbyt skomplikowany by to łatwo przepisać
 
             return forecastDataList;
         } catch (JsonProcessingException e) {

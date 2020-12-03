@@ -74,6 +74,6 @@ class LocalisationServiceFindIntegrationTest {
         assertThat(responseBody.getCountry()).isEqualTo("Poland");
         assertThat(responseBody.getLatitude()).isEqualTo(0);
         assertThat(responseBody.getLongitude()).isEqualTo(1);
-        assertThat(responseBody.getRegion()).isEqualTo("Pomorskie");
+        assertThat(responseBody.getRegion()).isEqualTo("Optional[Pomorskie]");
     }
 }
