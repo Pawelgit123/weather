@@ -18,12 +18,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ForecastServiceGet {
 
-    private ApiConfiguration apiConfiguration;
-    private ForecastDataMapper forecastDataMapper;
+    private ApiConfiguration apiConfiguration;                      // todo we need mark this as final (do you know why?)
+    private ForecastDataMapper forecastDataMapper;                  // todo we need mark this as final
     private final RestTemplate restTemplate = new RestTemplate();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    // todo write some test :) we need it to develop our code quickly
 
+    // todo DTO (LocalisationDTO) should not appear in the business logic layer
+    //  only String cityName is required
     ForecastData getCurrentWeatherByCityName(LocalisationDTO localisationDTO) {
 // http://api.openweathermap.org/data/2.5/find?q=Gdansk&units=metric&appid=a5bd02ecf7c1f72449ae4d087d08d275
         String ulr = apiConfiguration.getUrlCurrent();
@@ -65,6 +68,7 @@ public class ForecastServiceGet {
         }
     }
 
+    // todo DTO (LocalisationDTO) should not appear in the business logic layer
     List<ForecastData> getForecastByCityName(LocalisationDTO localisationDTO) {
         String ulr = apiConfiguration.getUrlForecast();
         String units = apiConfiguration.getUnits();
