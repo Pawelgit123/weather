@@ -14,6 +14,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,14 +30,14 @@ class ForecastControllerTest {
 
     @Autowired
     LocalisationRepository localisationRepository;
-
-    ForecastDataMapper forecastDataMapper;
-    Configuration configuration;
+    @Autowired
+    ForecastRepository forecastRepository;
 
     Localisation savedLocalisation;
 
     @BeforeEach
     void setup() {
+        forecastRepository.deleteAll();
         localisationRepository.deleteAll();
         Localisation localisation = new Localisation();
         localisation.setCityName("Sopot");
@@ -44,6 +45,7 @@ class ForecastControllerTest {
         localisation.setCountry("PL");
         localisation.setLatitude(15);
         localisation.setLongitude(15);
+
         savedLocalisation = localisationRepository.save(localisation);
     }
 
@@ -52,20 +54,24 @@ class ForecastControllerTest {
     @Test
     void getForecast_status200() throws Exception {
 
-
         Long id = savedLocalisation.getId();
-        MockHttpServletRequestBuilder request = get("/localisation/" +id+"/forecast")
+        MockHttpServletRequestBuilder request = get("/localisation/" + id + "/forecast")
                 .contentType(MediaType.APPLICATION_JSON);
 
         MockHttpServletResponse response = mockMvc.perform(request).andReturn().getResponse();
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-
-
     }
 
     @Test
-    void getForecast_status400_whenPeriodIs5() {
+    void getForecast_status400_whenPeriodIs5() throws Exception {
+        Long id = savedLocalisation.getId();
+        MockHttpServletRequestBuilder request = get("/localization/" + id + "/forecast?period=6")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        MockHttpServletResponse response = mockMvc.perform(request).andReturn().getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
 
     }
 

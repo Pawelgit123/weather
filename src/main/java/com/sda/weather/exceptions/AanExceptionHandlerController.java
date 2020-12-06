@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import javax.validation.ConstraintViolationException;
+
 @ControllerAdvice
 @Slf4j
 public class AanExceptionHandlerController {
@@ -34,9 +36,10 @@ public class AanExceptionHandlerController {
         log.error(e.getMessage());
     }
 
-    @ExceptionHandler(NotFoundException.class)
+    @ExceptionHandler({NotFoundException.class, ConstraintViolationException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    void notFoundException(NotFoundException e) {
+    void notFoundException(RuntimeException e) {
         log.error(e.getMessage());
     }
+
 }

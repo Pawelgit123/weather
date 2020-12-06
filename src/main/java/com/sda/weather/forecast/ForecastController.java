@@ -28,7 +28,7 @@ public class ForecastController {
     final Configuration configuration;
 
     @GetMapping("/localisation/{id}/forecast")
-    ForecastDataDTO getForecast(@PathVariable Long id, @RequestParam(required = false, defaultValue = "1") @Min(1) @Max(5) String period) {
+    ForecastDataDTO getForecast(@PathVariable Long id, @RequestParam(required = false, defaultValue = "1") @Min(1) @Max(5) Integer period) {
         ForecastData forecastData = forecastServiceGet.getForecast(id, period);
         return forecastDataMapper.mapForecastDataToForecastDataDTO(forecastData);
     }

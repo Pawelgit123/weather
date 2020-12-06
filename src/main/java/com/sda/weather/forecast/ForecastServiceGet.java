@@ -4,10 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sda.weather.Configuration;
 import com.sda.weather.exceptions.ForecastAPiFailure;
-import com.sda.weather.localisation.Localisation;
-import com.sda.weather.localisation.LocalisationDTO;
-import com.sda.weather.localisation.LocalisationServiceFind;
-import com.sda.weather.localisation.LocalisationServiceGetAll;
+import com.sda.weather.localisation.*;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import net.bytebuddy.dynamic.scaffold.MethodRegistry;
@@ -16,7 +13,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,9 +30,12 @@ public class ForecastServiceGet {
     private final RestTemplate restTemplate = new RestTemplate();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    private final ForecastRepository forecastRepository;
+    private final LocalisationRepository localisationRepository;
+
     // todo write some test :) we need it to develop our code quickly
 
-    ForecastData getForecast(Long id, String period) {
+    ForecastData getForecast(Long id, @Min(1) @Max(5) Integer period) {
 
         // api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
 
@@ -42,9 +46,9 @@ public class ForecastServiceGet {
         String uri = UriComponentsBuilder.newInstance()
                 .scheme("http")
                 .host("api.openweathermap.org/data/2.5/forecast")
-                .queryParam(localisation.getCityName())
-                .queryParam(configuration.getApikey())
-                .queryParam(units)
+                .queryParam("q", localisation.getCityName())
+                .queryParam("units", units)
+                .queryParam("appid", configuration.getApikey())
                 .build()
                 .toString();
 
@@ -57,21 +61,52 @@ public class ForecastServiceGet {
 
             ForecastItem forecastItem = objectMapper.readValue(responseBody, ForecastItem.class);
 
+            LocalDateTime now = LocalDateTime.now();
+            LocalDateTime forecastDate = now.plusDays(period);
+
+    // tymczasowo:
 
             List<ForecastItem.SingleForecast> singleForecastList = forecastItem.getSingleForecastList();
+            List<ForecastData> collect = singleForecastList.stream()
+                    .map(singleForecastMapper::mapSingleForecastToForecastData)
+                    .collect(Collectors.toList());
 
-            // sprawdzić period z każdego singleforecastlist
+            ForecastData forecastData = collect.stream().findFirst().orElseThrow();
+            List<ForecastData> forecastDataList = localisation.getForecastDataList();
+            forecastDataList.add(forecastData);
+            forecastData.setLocalisation(localisation);
+            forecastRepository.save(forecastData);
+            localisationRepository.save(localisation);
 
-//            List<ForecastData> collect = singleForecastList.stream()
-//                    .map(singleForecastMapper::mapSingleForecastToForecastData)
-//                    .forEach(p -> localisation.getForecastDataList().add(p))
-//                    .collect
+
+            return forecastData;
+
+
+//            switch (period){
+//                case "1":
+//                    Set<ForecastData> collect = singleForecastList.stream()
+//                            .map(singleForecastMapper::mapSingleForecastToForecastData)
+//                            .filter()
+//                            .collect(Collectors.toList());
+//                    break;
+//
+//                case "2":
+//                     break;
+//                case "3":
+//                    break;
+//                case "4":
+//                    break;
+//                case "5":
+//                    break;
+//            }
+
+
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             return null;
         }
-        return new ForecastData();
+
     }
 
 }

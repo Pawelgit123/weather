@@ -18,7 +18,6 @@ public class LocalisationMapper {
         localisationDTO.setForecastDataList(localisation.getForecastDataList());
 
         localisationDTO.setRegion(String.valueOf(localisation.getRegion()));
-        // todo include the region field
 
         return localisationDTO;
     }
