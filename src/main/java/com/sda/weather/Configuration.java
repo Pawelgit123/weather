@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Data
 @ConfigurationProperties(prefix = "configuration")
-public class Configuration {
+public class Configuration {    // todo rename eg. ConfigurationProperties
 
 //    private String apikey = "=&appid=a5bd02ecf7c1f72449ae4d087d08d275";
 //    private String urlCurrent = "=http://api.openweathermap.org/data/2.5/weather?q=";
@@ -25,6 +25,7 @@ public class Configuration {
 //    private String urlForecast;
 //    private String units;
 
+    // todo move to specific class eg. AppConfiguration
     @Bean
     ObjectMapper getObjectMapper(){
         ObjectMapper objectMapper = new ObjectMapper();

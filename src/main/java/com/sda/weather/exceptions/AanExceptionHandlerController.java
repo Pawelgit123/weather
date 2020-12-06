@@ -36,10 +36,9 @@ public class AanExceptionHandlerController {
         log.error(e.getMessage());
     }
 
-    @ExceptionHandler({NotFoundException.class, ConstraintViolationException.class})
+    @ExceptionHandler({NotFoundException.class, ConstraintViolationException.class})    // todo move ConstraintViolationException
     @ResponseStatus(HttpStatus.NOT_FOUND)
     void notFoundException(RuntimeException e) {
         log.error(e.getMessage());
     }
-
 }

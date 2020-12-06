@@ -23,11 +23,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class ForecastControllerTest {
+class ForecastControllerIntegrationTest {
 
     @Autowired
     MockMvc mockMvc;
-
     @Autowired
     LocalisationRepository localisationRepository;
     @Autowired
@@ -45,7 +44,6 @@ class ForecastControllerTest {
         localisation.setCountry("PL");
         localisation.setLatitude(15);
         localisation.setLongitude(15);
-
         savedLocalisation = localisationRepository.save(localisation);
     }
 
@@ -53,7 +51,6 @@ class ForecastControllerTest {
 
     @Test
     void getForecast_status200() throws Exception {
-
         Long id = savedLocalisation.getId();
         MockHttpServletRequestBuilder request = get("/localisation/" + id + "/forecast")
                 .contentType(MediaType.APPLICATION_JSON);
@@ -66,20 +63,16 @@ class ForecastControllerTest {
     @Test
     void getForecast_status400_whenPeriodIs5() throws Exception {
         Long id = savedLocalisation.getId();
-        MockHttpServletRequestBuilder request = get("/localization/" + id + "/forecast?period=6")
+        MockHttpServletRequestBuilder request = get("/localisation/" + id + "/forecast?period=6")
                 .contentType(MediaType.APPLICATION_JSON);
 
         MockHttpServletResponse response = mockMvc.perform(request).andReturn().getResponse();
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
-
     }
 
     @Test
     void getForecast_status400_whenPeriodIsNegative() {
 
-
     }
-
-
 }

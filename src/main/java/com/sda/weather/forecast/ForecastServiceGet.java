@@ -4,20 +4,17 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sda.weather.Configuration;
 import com.sda.weather.exceptions.ForecastAPiFailure;
-import com.sda.weather.localisation.*;
-import lombok.NoArgsConstructor;
+import com.sda.weather.localisation.Localisation;
+import com.sda.weather.localisation.LocalisationRepository;
+import com.sda.weather.localisation.LocalisationServiceFind;
 import lombok.RequiredArgsConstructor;
-import net.bytebuddy.dynamic.scaffold.MethodRegistry;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,19 +32,15 @@ public class ForecastServiceGet {
 
     // todo write some test :) we need it to develop our code quickly
 
-    ForecastData getForecast(Long id, @Min(1) @Max(5) Integer period) {
-
+    ForecastData getForecast(Long id, Integer period) {
         // api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
-
         Localisation localisation = localisationServiceFind.findLocalisationByID(id);
-
-        String units = "metric";
 
         String uri = UriComponentsBuilder.newInstance()
                 .scheme("http")
                 .host("api.openweathermap.org/data/2.5/forecast")
                 .queryParam("q", localisation.getCityName())
-                .queryParam("units", units)
+                .queryParam("units", "metric")
                 .queryParam("appid", configuration.getApikey())
                 .build()
                 .toString();
@@ -61,10 +54,11 @@ public class ForecastServiceGet {
 
             ForecastItem forecastItem = objectMapper.readValue(responseBody, ForecastItem.class);
 
-            LocalDateTime now = LocalDateTime.now();
+            LocalDateTime now = LocalDateTime.now();                // todo use LocalDate.now()
             LocalDateTime forecastDate = now.plusDays(period);
+                                                                    // .atTime(...) 12:00
 
-    // tymczasowo:
+            // tymczasowo:
 
             List<ForecastItem.SingleForecast> singleForecastList = forecastItem.getSingleForecastList();
             List<ForecastData> collect = singleForecastList.stream()
@@ -77,7 +71,6 @@ public class ForecastServiceGet {
             forecastData.setLocalisation(localisation);
             forecastRepository.save(forecastData);
             localisationRepository.save(localisation);
-
 
             return forecastData;
 
@@ -99,9 +92,6 @@ public class ForecastServiceGet {
 //                case "5":
 //                    break;
 //            }
-
-
-
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             return null;
