@@ -1,5 +1,6 @@
 package com.sda.weather.forecast;
 
+import com.sda.weather.localisation.Localisation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,5 +16,6 @@ public class ForecastDataDTO {
     int airHumidity;
     String windDirection;
     int windSpeed;
+    Localisation localisation;
 
 }

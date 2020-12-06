@@ -1,17 +1,21 @@
 package com.sda.weather.forecast;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class ForecastDataMapper {
 
-    ForecastData mapToForecastData(ForecastItem forecastItem) {
-        ForecastData forecastData = new ForecastData();
+    ForecastDataDTO mapForecastDataToForecastDataDTO(ForecastData forecastData) {
+        ForecastDataDTO forecastDataDTO = new ForecastDataDTO();
 
-        forecastData.setAirHumidity(forecastItem.getAirHumidity());
-        forecastData.setAirPressure(forecastItem.getAirPressure());
-        forecastData.setAirTemperature(forecastItem.getAirTemperature());
-        forecastData.setWindDirection(forecastItem.getWindDirection());
-        forecastData.setWindSpeed(forecastItem.getWindSpeed());
+        forecastDataDTO.setAirHumidity(forecastData.getAirHumidity());
+        forecastDataDTO.setAirPressure(forecastData.getAirPressure());
+        forecastDataDTO.setAirTemperature(forecastData.getAirTemperature());
+        forecastDataDTO.setWindDirection(forecastData.getWindDirection());
+        forecastDataDTO.setWindSpeed(forecastData.getWindSpeed());
+        forecastDataDTO.setLocalisation(forecastData.getLocalisation());
 
-        return forecastData;
+        return forecastDataDTO;
 
     }
 }
