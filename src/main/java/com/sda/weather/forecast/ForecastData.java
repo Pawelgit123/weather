@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -24,6 +25,6 @@ public class ForecastData {
     int windSpeed;
     @ManyToOne
     Localisation localisation;
-    LocalDate date;
+    LocalDateTime localdatetime;
 
 }

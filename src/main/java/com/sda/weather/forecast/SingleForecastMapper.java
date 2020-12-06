@@ -1,14 +1,10 @@
 package com.sda.weather.forecast;
 
-import com.sda.weather.localisation.Localisation;
-import net.minidev.asm.ConvertDate;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.time.format.DateTimeFormatter;
 
 @Component
 public class SingleForecastMapper {
@@ -22,9 +18,9 @@ public class SingleForecastMapper {
         forecastData.setAirPressure(singleForecast.getAirPressure());
         forecastData.setAirHumidity(singleForecast.getAirHumidity());
 
-//        Date date = ConvertDate.convertToDate(singleForecast.getDate());
-//
-//        forecastData.setDate(date);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm");
+        LocalDateTime localDate = LocalDateTime.parse(singleForecast.getDate(),formatter);
+        forecastData.setLocaldatetime(localDate);
 
         return forecastData;
     }

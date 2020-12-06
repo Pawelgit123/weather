@@ -1,6 +1,5 @@
 package com.sda.weather.forecast;
 
-import com.sda.weather.Configuration;
 import com.sda.weather.localisation.Localisation;
 import com.sda.weather.localisation.LocalisationRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,9 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -72,7 +68,14 @@ class ForecastControllerIntegrationTest {
     }
 
     @Test
-    void getForecast_status400_whenPeriodIsNegative() {
+    void getForecast_status400_whenPeriodIsNegative() throws Exception {
+        Long id = savedLocalisation.getId();
+        MockHttpServletRequestBuilder request = get("/localisation/" + id + "/forecast?period=-1")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        MockHttpServletResponse response = mockMvc.perform(request).andReturn().getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
 
     }
 }

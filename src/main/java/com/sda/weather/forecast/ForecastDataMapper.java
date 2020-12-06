@@ -14,7 +14,7 @@ public class ForecastDataMapper {
         forecastDataDTO.setWindDirection(forecastData.getWindDirection());
         forecastDataDTO.setWindSpeed(forecastData.getWindSpeed());
         forecastDataDTO.setLocalisation(forecastData.getLocalisation());
-        forecastData.setDate(forecastData.getDate());
+        forecastData.setLocaldatetime(forecastData.getLocaldatetime());
 
         return forecastDataDTO;
 

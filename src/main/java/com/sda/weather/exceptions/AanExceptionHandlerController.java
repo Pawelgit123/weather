@@ -30,15 +30,15 @@ public class AanExceptionHandlerController {
         log.error(e.getMessage());
     }
 
-    @ExceptionHandler(BadLocalisationCreation.class)
+    @ExceptionHandler({BadLocalisationCreation.class, ConstraintViolationException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    void badLocalisationCreation(BadLocalisationCreation e) {
+    void badLocalisationCreation(RuntimeException e) {
         log.error(e.getMessage());
     }
 
-    @ExceptionHandler({NotFoundException.class, ConstraintViolationException.class})    // todo move ConstraintViolationException
+    @ExceptionHandler({NotFoundException.class, })
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    void notFoundException(RuntimeException e) {
+    void notFoundException(NotFoundException e) {
         log.error(e.getMessage());
     }
 }
