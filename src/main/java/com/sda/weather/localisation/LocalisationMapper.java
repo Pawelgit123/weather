@@ -17,7 +17,7 @@ public class LocalisationMapper {
         localisationDTO.setLongitude(localisation.getLongitude());
         localisationDTO.setForecastDataList(localisation.getForecastDataList());
 
-        localisationDTO.setRegion(String.valueOf(localisation.getRegion()));
+        localisationDTO.setRegion(localisation.getRegion().orElse(null));
 
         return localisationDTO;
     }
