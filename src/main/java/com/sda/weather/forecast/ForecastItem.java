@@ -8,6 +8,8 @@ import java.util.List;
 @Data
 public class ForecastItem {
 
+    // czy pola mają być public?
+
     private String cod;
 
     private List<SingleForecast> singleForecastList;

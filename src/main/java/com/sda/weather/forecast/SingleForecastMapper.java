@@ -18,6 +18,7 @@ public class SingleForecastMapper {
         forecastData.setAirPressure(singleForecast.getAirPressure());
         forecastData.setAirHumidity(singleForecast.getAirHumidity());
 
+// sekundy jeszcze czy bez?
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm");
         LocalDateTime localDate = LocalDateTime.parse(singleForecast.getDate(),formatter);
         forecastData.setLocaldatetime(localDate);
