@@ -15,9 +15,8 @@ public class LocalisationMapper {
         localisationDTO.setCountry(localisation.getCountry());
         localisationDTO.setLatitude(localisation.getLatitude());
         localisationDTO.setLongitude(localisation.getLongitude());
+        localisationDTO.setRegion(localisation.getRegion().orElse(null));
 
-        localisationDTO.setRegion(String.valueOf(localisation.getRegion()));
-        // todo include the region field
 
         return localisationDTO;
     }
