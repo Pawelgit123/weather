@@ -11,6 +11,8 @@ import java.util.Map;
 
 public class CounterConfiguration {
 
+    //adnotacje i nazwa? bo w swaggerze się nie pojawiło
+
     @GetMapping("/counter")
     Map<Object, Object> getCounter(HttpServletRequest request, HttpServletResponse response) {
 //        request.getHeaderNames().asIterator().forEachRemaining(System.out::println);
