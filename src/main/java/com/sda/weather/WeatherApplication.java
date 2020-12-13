@@ -32,7 +32,7 @@ public class WeatherApplication implements CommandLineRunner {
         SpringApplication.run(WeatherApplication.class, args);
     }
 
-    @Scheduled(cron = "1 16 * * 1")
+    @Scheduled(cron = "1 16 * * 1 *")
     public void generateRaport(){
         log.info("At this point, we have "+ userRepository.count() +" users");
     }
