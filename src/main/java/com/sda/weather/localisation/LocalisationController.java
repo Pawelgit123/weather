@@ -28,7 +28,7 @@ public class LocalisationController {
         return localisationDTO;
     }
 
-    @GetMapping("/localisation/")
+    @GetMapping("/localisation")
     List<LocalisationDTO> getLocalisations() {
         return localisationServiceGetAll.getAllLocalisations().stream()
                 .map(localisationMapper::mapToLocalisationDto)

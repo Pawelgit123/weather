@@ -1,5 +1,7 @@
 package com.sda.weather;
 
+import com.sda.weather.localisation.Localisation;
+import com.sda.weather.localisation.LocalisationRepository;
 import com.sda.weather.security.User;
 import com.sda.weather.security.UserRepository;
 import lombok.RequiredArgsConstructor;

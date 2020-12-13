@@ -36,8 +36,8 @@ public class LocalisationServiceCreate {
             throw new BlankSpaceException("Blank spaces in <region>");
         }
 
-        if (localisationDefinition.getLongitude() <= LocalisationParamLimit.LONGITUDE_MAX
-                || localisationDefinition.getLongitude() >= LocalisationParamLimit.LONGITUDE_MIN) {
+        if (localisationDefinition.getLongitude() >= LocalisationParamLimit.LONGITUDE_MAX
+                || localisationDefinition.getLongitude() <= LocalisationParamLimit.LONGITUDE_MIN) {
             throw new DataOutOfBound("Longitude out of bound");
         }
 
